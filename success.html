@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モジサク - 成果物受け取り【無料β版】</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px 16px 60px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .success-badge {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .success-badge span {
+      background: #dcfce7;
+      color: #166534;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 800;
+      text-align: center;
+      margin-top: 12px;
+      margin-bottom: 24px;
+    }
+
+    .result-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      margin-bottom: 16px;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .result-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .btn-copy {
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-copy:active {
+      background: #e2e8f0;
+    }
+
+    .result-body {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: #0f172a;
+      border: 1px solid var(--border);
+    }
+
+    .btn-reorder {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 24px;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="success-badge">
+      <span>🎉 作成が完了しました！</span>
+    </div>
+
+    <h1>SNS投稿用テキストの完成</h1>
+
+    <div class="result-card">
+      <div class="result-header">
+        <span class="result-title">1. X（旧Twitter）用 ポスト文</span>
+        <button class="btn-copy" onclick="copyText('res-x')">コピー</button>
+      </div>
+      <div class="result-body" id="res-x"></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-header">
+        <span class="result-title">2. Note / Instagram用 要約文</span>
+        <button class="btn-copy" onclick="copyText('res-note')">コピー</button>
+      </div>
+      <div class="result-body" id="res-note"></div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-header">
+        <span class="result-title">3. テロップテキスト</span>
+        <button class="btn-copy" onclick="copyText('res-telop')">コピー</button>
+      </div>
+      <div class="result-body" id="res-telop"></div>
+    </div>
+
+    <a href="index.html" class="btn-reorder">別の動画も無料で作成する ➔</a>
+  </div>
+
+  <script>
+    window.onload = function() {
+      const finalData = localStorage.getItem('mojisaku_final_data');
+      if (finalData) {
+        const data = JSON.parse(finalData);
+        document.getElementById('res-x').textContent = data.x_post || 'データがありません';
+        document.getElementById('res-note').textContent = data.note_summary || 'データがありません';
+        document.getElementById('res-telop').textContent = data.telop_text || 'データがありません';
+      }
+    };
+
+    function copyText(elementId) {
+      const text = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('クリップボードにコピーしました！');
+      });
+    }
+  </script>
+
+</body>
+</html>
